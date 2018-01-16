@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<!--/*프로젝트용 사용자 생성*/
+create user project identified by 1234;
+
+/*권한 부여하기*/
+grant create session, create table to project;
+
+/*연결해보기*/
+conn project/1234;
+show user;
+
+/*테이블 생성*/
+
+--정주행 테이블
+create table showGD(
+    idx number(10) not null,
+    th varchar2(20) not null,
+    content varchar2(200) not null,
+    uploader varchar2(30) default 'GM',
+    postD Date default sysdate,
+    visitN number(10)  default 0
+);
+
+--drop table showGD purge;
+    alter table showGD add constraint PK
+    primary key (idx);
+
+--회원가입시 만들어질 멤버들 테이블
+create table members(
+    member_idx number(10) not null,
+    userid varchar2(30) not null,
+    passwd varchar2(50),
+    username varchar2(30),
+    birth Date
+);
+
+--커뮤니티 게시판용 테이블
+create table bbs(
+    NUM	NUMBER(20) not null,
+    TITLE VARCHAR2(100) not null,
+    CONTENT	VARCHAR2(2000) not null,
+    ID VARCHAR2(10) default '탈퇴한 아이디',
+    POSTDATE DATE default sysdate,
+    VISITCOUNT NUMBER(20) default 0
+);
+--drop table bbs purge;
+
+insert into bbs values (bbs_idx.nextval, '안뇽', '하이하이', 'GM', to_date('2017/06/15'), 1);
+
+--건의사항용 테이블
+create table suggest(
+    NUM	NUMBER(20) not null,
+    TITLE VARCHAR2(100) not null,
+    CONTENT	VARCHAR2(2000) not null,
+    ID VARCHAR2(10) default '탈퇴한 아이디',
+    POSTDATE DATE default sysdate,
+    VISITCOUNT NUMBER(20) default 0
+);
+
+insert into suggest values (suggest_idx.nextval, '개인프로젝트 페이지 입니다', '페이지 탄생 ㅊㅋㅊㅋ','GM', sysdate, 1);
+
+
+desc bbs;
+desc members;
+desc showGD;
+
+/*테이블의 속성(레이아웃) 확인*/
+select * from tab;
+/*해당 DB에 생성된 테이블의 목록 조회*/
+select * from tb_member;
+
+
+--외래키 삭제
+--alter table bbs drop constraint bbs_mem_fk;
+ 
+ 
+--시퀀스 생성
+create sequence showGD_idx
+    increment by 1
+    start with 1
+    nomaxvalue
+    minvalue 1
+    nocycle;    
+--drop sequence showGD_idx;
+
+--건의사항 게시물번호
+create sequence suggest_idx
+    increment by 1
+    start with 1
+    nomaxvalue
+    minvalue 1
+    nocycle;
+
+--drop sequence suggest_idx;
+    
+--자유게시판 인덱스 시퀀스
+create sequence BBS_idx
+    increment by 1
+    start with 1
+    nomaxvalue
+    minvalue 1
+    nocycle;    
+    
+--건의사항 인덱스 시퀀스
+create sequence suggest_idx
+    increment by 1
+    start with 1
+    nomaxvalue
+    minvalue 1
+    nocycle;    
+    
+--members 테이블의 members_idx 시퀀스
+create sequence members_idx
+    increment by 1
+    start with 1
+    nomaxvalue
+    minvalue 1
+    nocycle;
+    
+--시퀀스 삭제
+--drop sequence 시퀀스명;
+--전체행 날리기 truncate table 테이블명;
+ 
+
+--데이터 입력
+insert into showGD
+  values (showGD_idx.nextval '가담항설 1화','http://comic.naver.com/webtoon/detail.nhn?titleId=670144&no=1&weekday=thu' ,'GM', to_date('16.01.13'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 2화','http://comic.naver.com/webtoon/detail.nhn?titleId=670144&no=2&weekday=thu','GM', to_date('16.01.20'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 3화','http://comic.naver.com/webtoon/detail.nhn?titleId=670144&no=3&weekday=thu','GM', to_date('16.01.27'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 4화','http://comic.naver.com/webtoon/detail.nhn?titleId=670144&no=4&weekday=thu','GM', to_date('16.02.03'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 5화','http://comic.naver.com/webtoon/detail.nhn?titleId=670144&no=5&weekday=thu','GM', to_date('16.02.10'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 6화','http://comic.naver.com/webtoon/detail.nhn?titleId=670144&no=6&weekday=thu','GM', to_date('16.02.17'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 7화','http://comic.naver.com/webtoon/detail.nhn?titleId=670144&no=7&weekday=thu','GM', to_date('16.02.24'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 8화','http://comic.naver.com/webtoon/detail.nhn?titleId=670144&no=8&weekday=thu','GM', to_date('16.03.02'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 9화','http://comic.naver.com/webtoon/detail.nhn?titleId=670144&no=9&weekday=thu','GM', to_date('16.03.09'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 10화','http://comic.naver.com/webtoon/detail.nhn?titleId=670144&no=10&weekday=thu','GM', to_date('16.03.16'), 0);
+  
+  -- 주소 : 표에서 직접 입력으로 변경
+  
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 11화','보러가기 링크','GM', to_date('16.03.23'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 12화','보러가기 링크','GM', to_date('16.03.30'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 13화','보러가기 링크','GM', to_date('16.04.06'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 14화','보러가기 링크','GM', to_date('16.04.13'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 15화','보러가기 링크','GM', to_date('16.04.20'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 16화','보러가기 링크','GM', to_date('16.04.27'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 17화','보러가기 링크','GM', to_date('16.05.04'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 18화','보러가기 링크','GM', to_date('16.05.11'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 19화','보러가기 링크','GM', to_date('16.05.18'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 20화','보러가기 링크','GM', to_date('16.05.25'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 21화','보러가기 링크','GM', to_date('16.06.01'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 22화','보러가기 링크','GM', to_date('16.06.08'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 23화','보러가기 링크','GM', to_date('16.06.15'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 24화','보러가기 링크','GM', to_date('16.06.22'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 25화','보러가기 링크','GM', to_date('16.06.29'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 26화','보러가기 링크','GM', to_date('16.07.06'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 27화','보러가기 링크','GM', to_date('16.07.13'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 28화','보러가기 링크','GM', to_date('16.07.20'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 29화','보러가기 링크','GM', to_date('16.07.27'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 30화','보러가기 링크','GM', to_date('16.08.03'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 31화','보러가기 링크','GM', to_date('16.08.10'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 32화','보러가기 링크','GM', to_date('16.08.17'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 33화','보러가기 링크','GM', to_date('16.08.24'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 34화','보러가기 링크','GM', to_date('16.08.31'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 35화','보러가기 링크','GM', to_date('16.09.07'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 36화','보러가기 링크','GM', to_date('16.09.14'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 37화','보러가기 링크','GM', to_date('16.09.21'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 38화','보러가기 링크','GM', to_date('16.09.28'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 39화','보러가기 링크','GM', to_date('16.10.05'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 40화','보러가기 링크','GM', to_date('16.10.12'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 41화','보러가기 링크','GM', to_date('16.10.19'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 42화','보러가기 링크','GM', to_date('16.10.26'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 43화','보러가기 링크','GM', to_date('16.11.02'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 44화','보러가기 링크','GM', to_date('16.11.09'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 45화','보러가기 링크','GM', to_date('16.11.16'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 46화','보러가기 링크','GM', to_date('16.11.23'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 47화','보러가기 링크','GM', to_date('16.11.30'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 48화','보러가기 링크','GM', to_date('16.12.07'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 49화','보러가기 링크','GM', to_date('16.12.14'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 50화','보러가기 링크','GM', to_date('16.12.21'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 51화','보러가기 링크','GM', to_date('16.12.28'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 52화','보러가기 링크','GM', to_date('17.01.04'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 53화','보러가기 링크','GM', to_date('17.01.11'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 54화','보러가기 링크','GM', to_date('17.01.18'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 55화','보러가기 링크','GM', to_date('17.01.25'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 56화','보러가기 링크','GM', to_date('17.02.01'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 57화','보러가기 링크','GM', to_date('17.02.08'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 58화','보러가기 링크','GM', to_date('17.02.15'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 59화','보러가기 링크','GM', to_date('17.02.22'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 60화','보러가기 링크','GM', to_date('17.03.01'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 61화','보러가기 링크','GM', to_date('17.03.08'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 62화','보러가기 링크','GM', to_date('17.03.15'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 63화','보러가기 링크','GM', to_date('17.03.22'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 64화','보러가기 링크','GM', to_date('17.03.29'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 65화','보러가기 링크','GM', to_date('17.04.05'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 66화','보러가기 링크','GM', to_date('17.04.12'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 67화','보러가기 링크','GM', to_date('17.04.19'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 68화','보러가기 링크','GM', to_date('17.04.26'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 69화','보러가기 링크','GM', to_date('17.05.03'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 70화','보러가기 링크','GM', to_date('17.05.10'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 71화','보러가기 링크','GM', to_date('17.05.17'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 72화','보러가기 링크','GM', to_date('17.05.24'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 73화','보러가기 링크','GM', to_date('17.05.31'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 74화','보러가기 링크','GM', to_date('17.06.07'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 75화','보러가기 링크','GM', to_date('17.06.14'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 76화','보러가기 링크','GM', to_date('17.06.21'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 77화','보러가기 링크','GM', to_date('17.06.28'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 78화','보러가기 링크','GM', to_date('17.07.05'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 79화','보러가기 링크','GM', to_date('17.07.12'), 0);
+insert into showGD
+  values (showGD_idx.nextval,'가담항설 80화','보러가기 링크','GM', to_date('17.07.19'), 0);
+ 
+insert into members
+  values (members_idx.nextval, 'GM', '1234', '이미영', to_date('93-12-24'));
+ 
+--주의1 : 콘솔에서 입력후 반드시 commit 해야 한다. 그렇지 않으면 JDBC 프로그램에서는 레코드가 보이지 않는다.
+--주의2 : Foreign key가 걸려있으므로 member테이블에 레코드를 먼저 삽입해야 한다.
+
+
+	 -->
+</body>
+</html>
